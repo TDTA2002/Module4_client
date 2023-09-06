@@ -1,88 +1,155 @@
-import './navbar.scss'
-export default function Navbar() {
+import './navbar.scss'; // Import stylesheet if needed
+import React, { useEffect } from 'react';
+import { gsap, Expo } from 'gsap';
+import Runner from '../../../../public/imgs/Runner.png'
+const App = () => {
+    useEffect(() => {
+        gsap.to(".title-1", 2, {
+            x: 30,
+            opacity: 1,
+            ease: Expo.easeInOut
+        });
+
+        gsap.to(".title-2", 2, {
+            delay: 0.2,
+            x: -80,
+            opacity: 1,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".runner", 2, {
+            delay: 1.6,
+            x: -80,
+            opacity: 0,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".box-1", 4, {
+            delay: 1,
+            rotation: 200,
+            transformOrigin: "50% 50%",
+            opacity: 0,
+            x: -180,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".box-2", 4, {
+            delay: 1.2,
+            rotation: 90,
+            transformOrigin: "50% 50%",
+            opacity: 0,
+            x: -180,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".box-3", 4, {
+            delay: 1,
+            rotation: 180,
+            transformOrigin: "50% 50%",
+            opacity: 0,
+            x: -180,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".pattern", 2, {
+            delay: 0.8,
+            width: 0,
+            opacity: 0,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".logo", 2, {
+            delay: 1.6,
+            y: 20,
+            opacity: 0,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".menu ul li", {
+            duration: 2,
+            delay: 1.6,
+            y: 20,
+            opacity: 0,
+            ease: Expo.easeInOut,
+            stagger: 0.1,
+        });
+
+        gsap.from(".cart", 2, {
+            delay: 1.7,
+            y: 20,
+            opacity: 0,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".media ul li", {
+            duration: 2,
+            delay: 2,
+            y: 20,
+            opacity: 0,
+            ease: Expo.easeInOut,
+            stagger: 0.1,
+        });
+
+        gsap.from(".content p", 2, {
+            delay: 2.4,
+            y: 20,
+            opacity: 0,
+            ease: Expo.easeInOut
+        });
+
+        gsap.from(".content button", 2, {
+            delay: 2.6,
+            y: 20,
+            opacity: 0,
+            ease: Expo.easeInOut
+        });
+
+    }, []);
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="https://flowbite.com/" className="flex items-center">
-                    <img
-                        src="https://flowbite.com/docs/images/logo.svg"
-                        className="h-8 mr-3"
-                        alt="Flowbite Logo"
-                    />
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                        Flowbite
-                    </span>
-                </a>
-                <button
-                    data-collapse-toggle="navbar-default"
-                    type="button"
-                    className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                    aria-controls="navbar-default"
-                    aria-expanded="false"
-                >
-                    <span className="sr-only">Open main menu</span>
-                    <svg
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 17 14"
-                    >
-                        <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M1 1h15M1 7h15M1 13h15"
-                        />
-                    </svg>
-                </button>
-                <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
-                                aria-current="page"
-                            >
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >
-                                About
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >
-                                Services
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >
-                                Pricing
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >
-                                Contact
-                            </a>
-                        </li>
+        <div className="wrapper">
+            <div className="pattern"></div>
+
+            <div className="nav">
+                <div className="logo"></div>
+                <div className="menu">
+                    <ul>
+                        <li>Home</li>
+                        <li>Products</li>
+                        <li>Forum</li>
+                        <li>Contact</li>
                     </ul>
                 </div>
+
+                <div className="cart"></div>
             </div>
-        </nav>
-    )
-}
+
+            <div className="box-1 box"></div>
+            <div className="box-2 box"></div>
+            <div className="box-3 box"></div>
+
+            <div className="title-2">Everything</div>
+
+            <div className="runner">
+                <img src={Runner} alt="" />
+            </div>
+
+            <div className="title-1">Fast</div>
+
+            <div className="content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum itaque sequi similique, eius maxime porro tenetur magnam in officiis velit quisquam aspernatur voluptatum ab excepturi commodi suscipit id non quod dolores ad consequatur corporis nisi. Aperiam neque recusandae libero.
+                </p>
+
+                <button>Shop Now</button>
+            </div>
+
+            <div className="media">
+                <ul>
+
+                </ul>
+            </div>
+        </div>
+    );
+};
+
+export default App;

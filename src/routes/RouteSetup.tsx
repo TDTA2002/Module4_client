@@ -9,7 +9,6 @@ import Home from '@pages/homes/Home';
 /* Route Setup */
 import RouteProduct from "./RouteProduct";
 import RouteUser from "./RouteUser";
-import RouteAdmin from "./RouteAdmin";
 export default function RouteSetup() {
   return (
     <BrowserRouter>
@@ -23,7 +22,6 @@ export default function RouteSetup() {
             </Route>
              {/* Users */}
             {RouteUser}
-            {RouteAdmin}
         </Routes>
     </BrowserRouter>
   )
