@@ -64,12 +64,24 @@ const Register = () => {
             register(e)
         }} action="#">
             <Components.Title>Create Account</Components.Title>
-            <Components.Input type="text" placeholder="firstName" name="email" />
+            <Components.Input type="text" placeholder="firstName" name="firstName" />
             <Components.Input type="text" placeholder="lastName" name="lastName" />
             <Components.Input type="text" placeholder="userName" name="userName" />
             <Components.Input type="email" placeholder="email" name="email" />
             <Components.Input type="password" placeholder="password" name="password" />
-            <Components.Button>Sign Up</Components.Button>
+            {
+                load && <Loading />
+            }
+            <button
+                type="submit"
+                className={`${load && 'active'} btn_submit w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
+            >
+                Create an account
+                <div className='btn_loading'>
+                    <Spin indicator={antIcon} />
+                </div>
+            </button>
+
         </Components.Form>
 
 

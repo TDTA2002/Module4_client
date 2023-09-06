@@ -29,9 +29,11 @@ body {
     }
 
     .nav {
-        width: 100%;
+        // width: 100%;
         height: 80px;
-        position: absolute;
+        position: sticky;
+        top: 0;
+        z-index: 10;
     }
 
     .logo {
@@ -39,6 +41,10 @@ body {
         margin: 0.2em 2em;
         line-height: 80px;
         position: absolute;
+        img {
+            width: 70px;
+            height: 70px;
+        }
     }
 
     .menu {

@@ -3,8 +3,8 @@ import { Route } from "react-router-dom";
 
 export default
     <>
-        <Route path="/register" element={Lazy(() => import("@pages/users/Register"))()} />
-        <Route path="/login" element={Lazy(() => import("@pages/users/Login"))()} />
-        <Route path="/test" element={Lazy(() => import("@pages/users/Test"))()} />
+        {/* <Route path="/register" element={Lazy(() => import("@pages/users/Register"))()} />
+        <Route path="/login" element={Lazy(() => import("@pages/users/Login"))()} /> */}
+        <Route path="/form" element={Lazy(() => import("@/pages/users/Form"))()} />
 
     </>

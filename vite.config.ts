@@ -14,7 +14,9 @@ export default defineConfig({
       "@services": `${path.resolve(__dirname, "./src/services/")}`,
       "@routes": `${path.resolve(__dirname, "./src/routes/")}`,
       "@utils": `${path.resolve(__dirname, "./src/utils/")}`,
-      "@slices": `${path.resolve(__dirname, "./src/stores/slices/")}`
+      "@slices": `${path.resolve(__dirname, "./src/stores/slices/")}`,
+      "@admin": `${path.resolve(__dirname, "./src/admin")}`
+
     },
   },
 

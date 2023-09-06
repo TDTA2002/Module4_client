@@ -24,6 +24,8 @@
       "@routes/*": ["src/routes/*"],
       "@utils/*": ["src/utils/*"],
       "@slices/*": ["src/stores/slices/*"],
+      "@admin/*": ["src/admin/*"],
+
     },
 
     /* Linting */

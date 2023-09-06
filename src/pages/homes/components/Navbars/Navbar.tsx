@@ -110,7 +110,7 @@ const App = () => {
             <div className="pattern"></div>
 
             <div className="nav">
-                <div className="logo"></div>
+                <div className="logo"><img src="https://img.etimg.com/thumb/msid-59738997,width-480,height-360,imgsize-21421,resizemode-75/nike.jpg" alt="" /></div>
                 <div className="menu">
                     <ul>
                         <li>Home</li>

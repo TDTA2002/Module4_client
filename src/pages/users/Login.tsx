@@ -60,15 +60,27 @@ const Register = () => {
         setLoad(false)
     }
     return (
-     
+
         <Components.Form onSubmit={(e: React.FormEvent<Element>) => {
             login(e)
         }} className="space-y-4 md:space-y-6" action="#">
             <Components.Title>Sign in</Components.Title>
             <Components.Input type="test" placeholder="Email" name="userName" />
-            <Components.Input type="password" placeholder="Password" name="password"/>
+            <Components.Input type="password" placeholder="Password" name="password" />
             <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-            <Components.Button>Sign In</Components.Button>
+            {/* <Components.Button>Sign In</Components.Button> */}
+            {
+                load && <Loading />
+            }
+            <button
+                type="submit"
+                className={`${load && 'active'} btn_submit w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
+            >
+                Login
+                <div className='btn_loading'>
+                    <Spin indicator={antIcon} />
+                </div>
+            </button>
         </Components.Form>
     )
 }
