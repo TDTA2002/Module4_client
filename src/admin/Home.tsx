@@ -1,37 +1,151 @@
-import React from 'react'
-import product from '../public/imgs/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f313735393739342f313237373639342f30313234646530302d326564392d313165332d386132342d3431346431363639386237332e676966.gif'
-import { BiSolidUserBadge } from "react-icons/bi";
-import { BsCoin } from "react-icons/bs";
 
 export default function Home() {
     return (
-        <div>Home
-
+        <main>
+            <div className="head-title">
+                <div className="left">
+                    <h1>Dashboard</h1>
+                    <ul className="breadcrumb">
+                        <li>
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li>
+                            <i className="bx bx-chevron-right" />
+                        </li>
+                        <li>
+                            <a className="active" href="#">
+                                Home
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" className="btn-download">
+                    <i className="bx bxs-cloud-download" />
+                    <span className="text">Download PDF</span>
+                </a>
+            </div>
             <ul className="box-info">
                 <li>
-                    <img src={product} alt="" style={{ width: "30px" }}
-                    />
+                    <i className="bx bxs-calendar-check" />
                     <span className="text">
                         <h3>1020</h3>
-                        <p>Products</p>
+                        <p>New Order</p>
                     </span>
                 </li>
                 <li>
-                    <BiSolidUserBadge />
+                    <i className="bx bxs-group" />
                     <span className="text">
                         <h3>2834</h3>
-                        <p>Users</p>
+                        <p>Visitors</p>
                     </span>
                 </li>
                 <li>
-                    <BsCoin />
+                    <i className="bx bxs-dollar-circle" />
                     <span className="text">
                         <h3>$2543</h3>
                         <p>Total Sales</p>
                     </span>
                 </li>
             </ul>
-
-        </div>
+            <div className="table-data">
+                <div className="order">
+                    <div className="head">
+                        <h3>Recent Orders</h3>
+                        <i className="bx bx-search" />
+                        <i className="bx bx-filter" />
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Date Order</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="img/people.png" alt="User" />
+                                    <p>John Doe</p>
+                                </td>
+                                <td>01-10-2021</td>
+                                <td>
+                                    <span className="status completed">Completed</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="img/people.png" alt="User" />
+                                    <p>John Doe</p>
+                                </td>
+                                <td>01-10-2021</td>
+                                <td>
+                                    <span className="status pending">Pending</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="img/people.png" alt="User" />
+                                    <p>John Doe</p>
+                                </td>
+                                <td>01-10-2021</td>
+                                <td>
+                                    <span className="status process">Process</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="img/people.png" alt="User" />
+                                    <p>John Doe</p>
+                                </td>
+                                <td>01-10-2021</td>
+                                <td>
+                                    <span className="status pending">Pending</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="img/people.png" alt="User" />
+                                    <p>John Doe</p>
+                                </td>
+                                <td>01-10-2021</td>
+                                <td>
+                                    <span className="status completed">Completed</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div className="todo">
+                    <div className="head">
+                        <h3>Todos</h3>
+                        <i className="bx bx-plus" />
+                        <i className="bx bx-filter" />
+                    </div>
+                    <ul className="todo-list">
+                        <li className="completed">
+                            <p>Todo List</p>
+                            <i className="bx bx-dots-vertical-rounded" />
+                        </li>
+                        <li className="completed">
+                            <p>Todo List</p>
+                            <i className="bx bx-dots-vertical-rounded" />
+                        </li>
+                        <li className="not-completed">
+                            <p>Todo List</p>
+                            <i className="bx bx-dots-vertical-rounded" />
+                        </li>
+                        <li className="completed">
+                            <p>Todo List</p>
+                            <i className="bx bx-dots-vertical-rounded" />
+                        </li>
+                        <li className="not-completed">
+                            <p>Todo List</p>
+                            <i className="bx bx-dots-vertical-rounded" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
     )
 }

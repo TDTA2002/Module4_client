@@ -1,7 +1,6 @@
 import React, { FormEvent, memo, useState } from 'react'
 import './user.scss'
 import { useTranslation } from 'react-i18next'
-import DropDown from '@/components/DropDown'
 import api from '@services/apis'
 import Loading from './components/Loading'
 import { LoadingOutlined } from '@ant-design/icons';

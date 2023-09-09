@@ -1,5 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { FormEvent, MutableRefObject, useEffect, useRef, useState } from 'react'
 import api from '@services/apis'
+import './scss/addproduct.scss'
+import Input from 'antd/es/input/Input';
+
 
 interface Category {
     id: string;
@@ -11,7 +14,7 @@ interface Picture {
     url: string;
 }
 export default function Product() {
-    const imgPreviewRef = useRef();
+    const imgPreviewRef: MutableRefObject<HTMLImageElement | null> = useRef(null);
     const [categories, setCategories] = useState([]);
     const [pictures, setPictures] = useState<Picture[]>([]);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -26,11 +29,11 @@ export default function Product() {
             })
     }, [])
 
-    function addNewProduct(e: FormDataEvent) {
+    function addNewProduct(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         let formData = new FormData();
         formData.append("product", JSON.stringify({
-            categoriesId: (e.target as any).categoriesId.value,
+            categoryId: (e.target as any).categoriesId.value,
             name: (e.target as any).name.value,
             des: (e.target as any).des.value,
             price: (e.target as any).price.value,
@@ -77,61 +80,73 @@ export default function Product() {
                             </div>
                             <div className="modal-body">
 
-                                <div>
-                                    Category
-                                    <select name='categoriesId'>
-                                        {
-                                            categories.map(category => <option key={Math.random() * Date.now()} value={(category as Category).id}>{(category as Category).title}</option>)
-                                        }
-                                    </select>
-                                </div>
-                                <div>
-                                    Name
-                                    <input name='name' type="text" />
-                                </div>
-                                <div>
-                                    Des
-                                    <input name='des' type="text" />
-                                </div>
-                                <div>
-                                    Price
-                                    <input name='price' type="text" />
-                                </div>
-                                <div>
-                                    Avatar
-                                    <input name='imgs' type="file" onChange={(e) => {
-                                        if (e.target.files) {
-                                            if (e.target.files.length > 0) {
-                                                (imgPreviewRef.current! as HTMLImageElement).src = URL.createObjectURL(e.target.files[0]);
-                                                setAvatarFile(e.target.files[0])
-                                            }
-                                        }
-                                    }} />
-                                    <img ref={imgPreviewRef} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
-                                </div>
-                                <div>
-                                    Pictures
-                                    <input name="imgs" type="file" multiple onChange={(e) => {
-                                        if (e.target.files) {
-                                            if (e.target.files.length > 0) {
-                                                let tempPictures: Picture[] = [];
-                                                for (let i in e.target.files) {
-                                                    if (i == "length") {
-                                                        break
-                                                    }
-                                                    tempPictures.push({
-                                                        file: e.target.files[i],
-                                                        url: URL.createObjectURL(e.target.files[i])
-                                                    })
-                                                }
-                                                setPictures(tempPictures)
-                                            }
-                                        }
-                                    }} />
+                                <div className='detailproduct'>
                                     <div>
-                                        {
-                                            pictures.map(picture => <img src={picture.url} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />)
-                                        }
+                                        <div>
+                                            Category <br />
+                                            <select name='categoriesId'>
+                                                {
+                                                    categories.map(category => <option key={Math.random() * Date.now()} value={(category as Category).id}>{(category as Category).title}</option>)
+                                                }
+                                            </select>
+                                        </div>
+                                        <div>
+                                            Name <br />
+
+                                            <Input name='name' type="text" placeholder='Name' />
+                                        </div>
+                                    </div>
+                                    <div>
+
+                                        <div>
+                                            Des <br />
+                                            <Input name='des' type="text" placeholder='Des' />
+                                        </div>
+
+                                        <div>
+                                            Price
+                                            <br />
+                                            <Input name='price' type="text" placeholder='price' />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        Avatar <br />
+                                        <input name='imgs' type="file" onChange={(e) => {
+                                            if (e.target.files) {
+                                                if (e.target.files.length > 0) {
+                                                    (imgPreviewRef.current! as HTMLImageElement).src = URL.createObjectURL(e.target.files[0]);
+                                                    setAvatarFile(e.target.files[0])
+                                                }
+                                            }
+                                        }} /> <br />
+                                        <img ref={imgPreviewRef} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
+                                    </div>
+                                    <div>
+                                        Pictures <br />
+                                        <input name="imgs" type="file" multiple onChange={(e) => {
+                                            if (e.target.files) {
+                                                if (e.target.files.length > 0) {
+                                                    let tempPictures: Picture[] = [];
+                                                    for (let i in e.target.files) {
+                                                        if (i == "length") {
+                                                            break
+                                                        }
+                                                        tempPictures.push({
+                                                            file: e.target.files[i],
+                                                            url: URL.createObjectURL(e.target.files[i])
+                                                        })
+                                                    }
+                                                    setPictures(tempPictures)
+                                                }
+                                            }
+                                        }} /> <br />
+                                        <div>
+                                            {
+                                                pictures.map(picture => <img src={picture.url} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />)
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>

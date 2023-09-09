@@ -1,119 +1,147 @@
-import { useEffect, useRef, useState } from 'react'
 import './product.scss'
-import api from '@services/apis'
+import { useEffect, useState } from 'react';
+import apis from '@/services/apis';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
-interface Category {
+interface Product {
+  stt: number;
   id: string;
-  title: string;
+  name: string;
   avatar: string;
+  price: GLfloat;
+  des: string;
+  active: boolean;
 }
-interface Picture {
-  file: File;
-  url: string;
+
+interface CartItem {
+  productId: string;
+  quantity: number;
 }
 export default function Product() {
-  const imgPreviewRef = useRef();
-  const [categories, setCategories] = useState([]);
-  const [pictures, setPictures] = useState<Picture[]>([]);
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [maxItemPage, setMaxItemPage] = useState(8);
+  const [skipItem, setSkipItem] = useState(0);
+  const [maxPage, setMaxPage] = useState<any[]>([]);
+  const currentPage = Math.ceil(skipItem / maxItemPage);
+
   useEffect(() => {
-    api.categoryApi.findMany()
+    apis.productApi.findMany(maxItemPage, skipItem)
       .then(res => {
-        if (res.status != 200) {
-          alert(res.data.message)
-        } else {
-          setCategories(res.data.data)
+        if (res.status == 200) {
+          let maxPageArr: any[] = [];
+          for (let i = 0; i < res.data.maxPage; i++) {
+            maxPageArr.push({
+              number: Number(i) + 1,
+              skip: res.data.data.length * Number(i)
+            })
+          }
+          setMaxPage(maxPageArr);
+          setSkipItem(res.data.data.length)
+          setProducts(res.data.data)
         }
       })
   }, [])
 
-  function addNewProduct(e: FormDataEvent) {
-    e.preventDefault();
-    let formData = new FormData();
-    formData.append("product", JSON.stringify({
-      categoriesId: (e.target as any).categoriesId.value,
-      name: (e.target as any).name.value,
-      des: (e.target as any).des.value,
-      price: (e.target as any).price.value,
-    }))
-    formData.append("imgs", avatarFile!)
-    for (let i in pictures) {
-      formData.append("imgs", pictures[i].file)
-    }
-
-    api.productApi.create(formData)
+  function changePage(pageItemObj: any) {
+    apis.productApi.findMany(maxItemPage, pageItemObj.skip)
       .then(res => {
-        console.log("res", res)
+        if (res.status == 200) {
+          let maxPageArr: any[] = [];
+          for (let i = 0; i < res.data.maxPage; i++) {
+            maxPageArr.push({
+              number: Number(i) + 1,
+              skip: res.data.data.length * Number(i)
+            })
+          }
+          setMaxPage(maxPageArr);
+          setSkipItem(pageItemObj.skip)
+          setProducts(res.data.data)
+        }
       })
-      .catch(err => {
-
-      })
-
-    window.alert("OK")
   }
+  async function handleAddToCart(productId: string) {
+    let carts: CartItem[] = JSON.parse(localStorage.getItem("carts") ?? "[]");
+    if (carts.length == 0) {
+      // cart rỗng
+      carts.push({
+        productId,
+        quantity: 1
+      })
+    } else {
+      // cart có sp
+      let flag: boolean = false;
+      carts = carts.map(item => {
+        if (item.productId == productId) {
+          item.quantity += 1
+          flag = true;
+        }
+        return item
+      })
+      if (!flag) {
+        carts.push({
+          productId,
+          quantity: 1
+        })
+      }
+    }
+    await localStorage.setItem("carts", JSON.stringify(carts))
+
+  }
+
+  
   return (
-    <form onSubmit={(e) => {
-      addNewProduct(e);
-    }}>
-      <h1>Add Product</h1>
-      <div>
-        Category
-        <select name='categoriesId'>
-          {
-            categories.map(category => <option key={Math.random() * Date.now()} value={(category as Category).id}>{(category as Category).title}</option>)
-          }
-        </select>
-      </div>
-      <div>
-        Name
-        <input name='name' type="text" />
-      </div>
-      <div>
-        Des
-        <input name='des' type="text" />
-      </div>
-      <div>
-        Price
-        <input name='price' type="text" />
-      </div>
-      <div>
-        Avatar
-        <input name='imgs' type="file" onChange={(e) => {
-          if (e.target.files) {
-            if (e.target.files.length > 0) {
-              (imgPreviewRef.current! as HTMLImageElement).src = URL.createObjectURL(e.target.files[0]);
-              setAvatarFile(e.target.files[0])
-            }
-          }
-        }} />
-        <img ref={imgPreviewRef} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
-      </div>
-      <div>
-        Pictures
-        <input name="imgs" type="file" multiple onChange={(e) => {
-          if (e.target.files) {
-            if (e.target.files.length > 0) {
-              let tempPictures: Picture[] = [];
-              for (let i in e.target.files) {
-                if (i == "length") {
-                  break
-                }
-                tempPictures.push({
-                  file: e.target.files[i],
-                  url: URL.createObjectURL(e.target.files[i])
-                })
-              }
-              setPictures(tempPictures)
-            }
-          }
-        }} />
-        <div>
-          {
-            pictures.map(picture => <img src={picture.url} style={{ width: "100px", height: "100px", borderRadius: "50%" }} />)
-          }
+    <div className="products" id="Products">
+
+      <div className='container_card'>
+
+        <div className='listcard'>
+          <div className="box">
+            {products.map((product, index) => (
+              <div className="card">
+                <div className="small_card">
+                  <i className="fa-solid fa-heart" />
+                  <i className="fa-solid fa-cart-shopping" onClick={() => {
+                    handleAddToCart(product.id)
+                    console.log("handleAddToCart(product?.id)", handleAddToCart(product.id));
+
+                  }} />
+                </div>
+                <div className="image">
+                  <img src={product.avatar} />
+                </div>
+                <div className="products_text">
+                  <h2>{product.name}</h2>
+                  <p>{product.des}</p>
+                  <h3>${product.price}</h3>
+
+                  <Link to={product.id} className="btn">
+                    Details
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+          <br />
+          <div className='page_box'>
+            <FaAngleLeft />
+            {maxPage.map(item => (
+              <Button
+                key={item.number}
+                className={`item_page ${currentPage + 1 == item.number ? 'active' : ''}`}
+                onClick={() => changePage(item)}
+              >
+                {item.number}
+              </Button>
+            ))}
+            <FaAngleRight />
+          </div>
         </div>
       </div>
-      <button type='submit'>Add</button>
-    </form>
+
+    </div>
+
   )
 }
