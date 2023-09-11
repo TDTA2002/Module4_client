@@ -11,19 +11,6 @@ function App() {
   const store = useSelector(store => store) as StoreType;
 
 
-  // useEffect(() => {
-  //   api.productApi.getAllProducts()
-  //     .then(res => {
-  //       if (res.status == 200) {
-  //         dispatch(productAction.setProducts(res.data.data))
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Lỗi khi lấy dữ liệu từ API:', error);
-  //     });
-  // }, []);
-
-
   useEffect(() => {
     if (localStorage.getItem("token")) {
       api.userApi.authentication()

@@ -36,23 +36,17 @@ const Register = () => {
 
         await api.userApi.register(newUser)
             .then(res => {
+                setLoad(false);
                 if (res.status != 200) {
-                    Modal.confirm({
-                        content: res.data.message,
-                        okText: "thử lại"
-                    })
+                    message.warning(res.data.message);
                 } else {
-                    Modal.success({
-                        content: res.data.message,
-                        okText: "login"
-                    })
+                    message.success(res.data !== undefined ? res.data.message : res.status);
+                    
                 }
             })
-            .catch(_err => {
-                Modal.success({
-                    content: "Sập server!",
-                    okText: "thử lại"
-                })
+            .catch(err => {
+                message.error('An error occurred during registration. Please try again.');
+                setLoad(false);
             })
 
         setLoad(false)
@@ -63,11 +57,11 @@ const Register = () => {
             register(e)
         }} action="#">
             <Components.Title>Create Account</Components.Title>
-            <Components.Input type="text" placeholder="firstName" name="firstName" />
-            <Components.Input type="text" placeholder="lastName" name="lastName" />
-            <Components.Input type="text" placeholder="userName" name="userName" />
-            <Components.Input type="email" placeholder="email" name="email" />
-            <Components.Input type="password" placeholder="password" name="password" />
+            <Components.Input type="text" placeholder="firstName" name="firstName" required />
+            <Components.Input type="text" placeholder="lastName" name="lastName" required />
+            <Components.Input type="text" placeholder="userName" name="userName" required />
+            <Components.Input type="email" placeholder="email" name="email" required />
+            <Components.Input type="password" placeholder="password" name="password" required />
             {
                 load && <Loading />
             }

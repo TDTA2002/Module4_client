@@ -8,6 +8,9 @@ export default {
             }
         })
     },
+    findByName: async function (searchString: string) {
+        return await axios.get(`${import.meta.env.VITE_SV_HOST}/products/findName?search=${searchString}`)
+    },
     getAllProducts: async function () {
         return await axios.get(import.meta.env.VITE_SV_HOST + "products")
     },
@@ -19,5 +22,12 @@ export default {
     },
     findByCategory: async function (categoryId: string) {
         return await axios.get(import.meta.env.VITE_SV_HOST + `connection/${categoryId}`)
+    },
+    update: async function (productId: string, formData: FormData) {
+        return await axios.patch(import.meta.env.VITE_SV_HOST + "products/" + productId, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
     },
 }

@@ -34,7 +34,7 @@ body {
     z-index: 10;
     display: flex;
     justify-content: center;
-    // background-color: transparent;
+    background-color: transparent;
 
     .nav_content {
         width: 100%;
@@ -73,7 +73,7 @@ body {
         }
 
         .right_content {
-            width: 23%;
+            width: 13%;
             display: flex;
             align-items: center;
             // justify-content: space-between;
@@ -98,7 +98,6 @@ body {
                 background-color: #eeecec;
                 padding: 15px;
                 height: 40px;
-                z-index: 2000;
             }
 
             input[type="text"] {

@@ -118,7 +118,7 @@ export default function Cart() {
                                 </div>
                                 <div className="flex flex-col justify-between ml-4 flex-grow">
                                     <span className="font-bold text-sm">{item.productDetail.name}</span>
-                                    <span className="text-red-500 text-xs">{item.productDetail.des}</span>
+                                    {/* <span className="text-red-500 text-xs">{item.productDetail.des}</span> */}
                                     <a
                                         className="font-semibold hover:text-red-500 text-gray-500 text-xs"
                                         onClick={() => handleRemoveFromCart(item.productId)}
@@ -135,7 +135,7 @@ export default function Cart() {
                                 >
                                     <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                                 </svg>
-                              
+
                                 <span className="mx-2 border text-center w-8">{item.quantity}</span>
                                 <svg
                                     className="fill-current text-gray-600 w-3 cursor-pointer"
@@ -161,35 +161,11 @@ export default function Cart() {
                 </div>
                 <div id="summary" className="w-1/4 px-8 py-10">
                     <h1 className="font-semibold text-2xl border-b pb-8">Tóm tắt đơn hàng</h1>
-                    <div>
-                        <label className="font-medium inline-block mb-3 text-sm uppercase">
-                            Vận chuyển
-                        </label>
-                        <select className="block p-2 text-gray-600 w-full text-sm">
-                            <option>Giao hàng tiêu chuẩn - $10.00</option>
-                        </select>
-                    </div>
-                    <div className="py-10">
-                        <label
-                            htmlFor="promo"
-                            className="font-semibold inline-block mb-3 text-sm uppercase"
-                        >
-                            Mã giảm giá
-                        </label>
-                        <input
-                            type="text"
-                            id="promo"
-                            placeholder="Nhập mã của bạn"
-                            className="p-2 text-sm w-full"
-                        />
-                    </div>
-                    <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">
-                        Áp dụng
-                    </button>
+
                     <div className="border-t mt-8">
                         <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                             <span>Tổng giá trị</span>
-                            <span>$600</span>
+                            <span>${ }</span>
                         </div>
                         <Link to={'/checkout'}>
                             <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">

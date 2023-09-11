@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import apis from '@/services/apis';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 interface Product {
   stt: number;
@@ -13,6 +13,7 @@ interface Product {
   price: GLfloat;
   des: string;
   active: boolean;
+  categoryId: string
 }
 
 interface CartItem {
@@ -26,6 +27,8 @@ export default function Product() {
   const [skipItem, setSkipItem] = useState(0);
   const [maxPage, setMaxPage] = useState<any[]>([]);
   const currentPage = Math.ceil(skipItem / maxItemPage);
+  const { categoryId } = useParams<{ categoryId: string }>();
+
 
   useEffect(() => {
     apis.productApi.findMany(maxItemPage, skipItem)
@@ -39,7 +42,7 @@ export default function Product() {
             })
           }
           setMaxPage(maxPageArr);
-          setSkipItem(res.data.data.length)
+          // setSkipItem(res.data.data.length)
           setProducts(res.data.data)
         }
       })
@@ -65,13 +68,11 @@ export default function Product() {
   async function handleAddToCart(productId: string) {
     let carts: CartItem[] = JSON.parse(localStorage.getItem("carts") ?? "[]");
     if (carts.length == 0) {
-      // cart rỗng
       carts.push({
         productId,
         quantity: 1
       })
     } else {
-      // cart có sp
       let flag: boolean = false;
       carts = carts.map(item => {
         if (item.productId == productId) {
@@ -88,18 +89,24 @@ export default function Product() {
       }
     }
     await localStorage.setItem("carts", JSON.stringify(carts))
-
   }
 
-  
+  let filteredProducts = products;
+  if (categoryId) {
+    filteredProducts = products.filter(product => product.categoryId === categoryId);
+  }
+  console.log("filteredProducts", filteredProducts);
+
   return (
+
+
     <div className="products" id="Products">
 
       <div className='container_card'>
 
         <div className='listcard'>
           <div className="box">
-            {products.map((product, index) => (
+            {filteredProducts.map((product, index) => (
               <div className="card">
                 <div className="small_card">
                   <i className="fa-solid fa-heart" />
@@ -114,10 +121,12 @@ export default function Product() {
                 </div>
                 <div className="products_text">
                   <h2>{product.name}</h2>
-                  <p>{product.des}</p>
+                  {/* <h2>{product.}</h2> */}
+
+                  {/* <p>{product.des}</p> */}
                   <h3>${product.price}</h3>
 
-                  <Link to={product.id} className="btn">
+                  <Link to={"/detail/" + product.id} className="btn">
                     Details
                   </Link>
                 </div>

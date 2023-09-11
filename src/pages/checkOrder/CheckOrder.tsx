@@ -1,73 +1,174 @@
-import React, { useState } from 'react'
-import api from '@/services/apis';
+import { useState } from 'react';
+import './checkorder.scss';
+// import ReceiptDetail from './ReceiptDetail';
+import { useNavigate } from 'react-router-dom';
+import OTPVerification from './Otp/Otp';
+import { message } from 'antd';
+import apis from '@/services/apis';
 
-export default function CheckOrder() {
+interface Receipt {
+  id: string,
+  state: string,
+  total: number,
+  createAt: Date,
+  email: string
+}
+
+export default function Receipt() {
+  const [loading, setLoading] = useState(false);
   const [emailInput, setEmailInput] = useState("");
-  const [receipts, setReceipts] = useState([])
+  const [receipts, setReceipts] = useState([]);
+  const [isShowOTP, setIsShowOTP] = useState(false);
+  const [isShow, setIsShow] = useState(true);
+  const [isShowReceipts, setIsShowReceipts] = useState(false);
+  const navigate = useNavigate();
   function handleGetOtp() {
-    api.purchaseApi.findGuestReceipt({ email: emailInput })
+    setLoading(true);
+    apis.purchaseApi.findGuestReceipt({ email: emailInput })
       .then(res => {
+        setLoading(false);
         if (res.status == 200) {
-          alert(res.data.message)
+          console.log("res", res)
+          message.success(res.data.message)
+          setIsShowOTP(true);
+          setIsShow(false);
         }
         console.log("đã vào đây", res.data)
       })
       .catch(err => {
+        setLoading(false);
         console.log("lỗi", err)
       })
 
   }
-  function handleGetReceipt() {
-    api.purchaseApi.findGuestReceipt({ email: emailInput, otp: window.prompt("OTP của bạn ?") ?? "29121999" })
+  function handleGetReceipt(otp: string) {
+    apis.purchaseApi.findGuestReceipt({ email: emailInput, otp: otp ?? "29121999" })
       .then(res => {
         if (res.status == 200) {
+          setIsShowOTP(false);
+          setIsShowReceipts(true);
+          console.log("res", res.data.data)
           setReceipts(res.data.data)
         }
       })
   }
   return (
-    <div>
-      <h1>CheckOrder</h1>
-      <div>
-        <input type="text" value={emailInput} onChange={(e) => {
+    <>
+      {isShow ? <div className='getOTP-container'>
+        <h5>Enter your email to get OTP</h5>
+        <input type="text" placeholder='Enter your email' value={emailInput} onChange={(e) => {
           setEmailInput(e.target.value)
-        }} />
+        }} /><br />
         <button onClick={() => {
           handleGetOtp()
-        }}>Lấy OTP</button>
-      </div>
-      <button onClick={() => {
-        handleGetReceipt()
-      }}>Lấy Hóa Đơn</button>
-      <br></br>
-      <ul>
-        {
-          receipts.map((receipt: any, index: number) => {
-            return (
-              <li key={receipt.id}>
-                <p>STT: {index + 1}</p>
-                <p>Mã hóa đơn: {receipt.id}</p>
-                <div>
-                  Sản Phẩm
-                  <ul>
-                    {
-                      receipt.guestReceiptDetail.map((item: any, index2: number) => {
-                        return (
-                          <li key={item.productId}>
-                            <p>STT: {index2 + 1}</p>
-                            <p>Mã SP: {item.productId}</p>
-                            <p>Số Lượng: {item.quantity}</p>
-                          </li>
-                        )
-                      })
-                    }
-                  </ul>
+        }}>{loading ? <span className='loading-spinner'></span> : "Submit"}</button>
+      </div> : <></>}
+      {isShowOTP ? <OTPVerification handleGetReceipt={handleGetReceipt} /> : <></>}
+      {isShowReceipts ?
+        // <div className="container mt-5">
+        //   <div className="d-flex justify-content-center row">
+        //     <div className="col-md-10">
+        //       <div className="rounded">
+        //         <div className="table-responsive table-borderless">
+        //           <table className="table">
+        //             <thead>
+        //               <tr>
+        //                 <th>Order #</th>
+        //                 <th>Email</th><th>status</th>
+        //                 <th>Total</th>
+        //                 <th>Created</th>
+        //                 <th />
+        //               </tr>
+        //             </thead>
+        //             <tbody className="table-body">
+        //               {receipts?.map((receipt, index) => (
+        //                 <tr className="cell-1">
+        //                   <td>{(receipt as Receipt).id}</td>
+        //                   <td>Gasper Antunes</td>
+        //                   <td>
+        //                     <span className="badge badge-success">{(receipt as Receipt).state}</span>
+        //                   </td>
+        //                   <td>${(receipt as Receipt).total}</td>
+        //                   <td>{(receipt as Receipt).createAt.toLocaleString()}</td>
+        //                   <td>
+        //                     {/* <ReceiptDetail /> */}
+        //                   </td>
+        //                 </tr>
+        //               ))}
+        //             </tbody>
+        //           </table>
+        //         </div>
+        //       </div>
+        //     </div>
+        //   </div>
+        // </div>
+        <div className="d-flex">
+          <section className="invoice-list-page">
+            <div className="invoice-list-page__header">
+              <div className="container">
+                <div className="d-flex flex-row align-items-center">
+                  <div className="col">
+                    <h2>Invoices</h2>
+                    <p className="detail">
+                      There are <span>{receipts.length}</span> total invoices
+                    </p>
+                  </div>
+
                 </div>
-              </li>
-            )
-          })
-        }
-      </ul>
-    </div>
+              </div>
+            </div>
+            <div className="invoice-list-page__content">
+              <div className="container">
+                {receipts?.map((receipt, index) => (
+                  <div className="invoice-item">
+                    <div className="d-flex flex-row align-items-center">
+                      <div className="col">
+                        <span className="id">
+                          #<span>{(receipt as Receipt).id}</span>
+                        </span>
+                      </div>
+                      <div className="col text-truncate">
+                        <span className="date">{(receipt as Receipt).createAt.toLocaleString()}</span>
+                      </div>
+                      <div className="col">
+                        <span className="company">{(receipt as Receipt).email}</span>
+                      </div>
+                      <div className="col text-end">
+                        <span className="amount">$ {(receipt as Receipt).total}</span>
+                      </div>
+                      <div className="col-3 text-center">
+                        <span className="status status--pending">{(receipt as Receipt).state}</span>
+                      </div>
+                      <div className="col-1 text-end">
+                        <button className="btn btn-arrow">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width={24}
+                            height={24}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-chevron-right"
+                          >
+                            <polyline points="9 18 15 12 9 6" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+
+        : <></>
+      }
+    </>
+
+
   )
 }

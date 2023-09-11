@@ -1,30 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react';
+import './scss/dropdownlg.scss';
 
-export default function DropDown() {
+export default function ToggleLanguage() {
+    const [language, setLanguage] = useState(localStorage.getItem("locales") === "en" ? "English" : "Viet Nam")
     function changeLanguage(lang: string) {
         localStorage.setItem("locales", lang);
         window.location.reload();
     }
     return (
-        <div className="dropdown" style={{position: 'absolute', bottom: '70%', right: '0'}}>
-            <button
-                className="btn btn-primary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
+        <div className="dropdown toggle-language">
+            <a
+                className="dropdown-toggle"
+                href="#"
+                id="Dropdown"
+                role="button"
                 data-mdb-toggle="dropdown"
                 aria-expanded="false"
-                style={{backgroundColor: 'blue'}}
             >
-                Dropdown button
-            </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><span onClick={() => {
-                    changeLanguage('vi')
-                }} className="dropdown-item">Tiếng Việt</span></li>
-                <li><span onClick={() => {
-                    changeLanguage('en')
-                }} className="dropdown-item">Tiếng Anh</span></li>
+                {language === "English" ? <i className="flag-united-kingdom flag m-0" /> : <i className="flag-vietnam flag" />} {language}
+            </a>
+            <ul className="dropdown-menu toggle-language-menu" aria-labelledby="Dropdown" style={{zIndex:"100000"}}>
+                <li>
+                    <a className="dropdown-item" href="#" onClick={() => changeLanguage("en")}>
+                        <i className="flag-united-kingdom flag" />
+                        En {language === "English" ? <i className="fa fa-check text-success ms-2" /> : <></>}
+                    </a>
+                </li>
+                <li>
+                    <hr className="dropdown-divider" />
+                </li>
+                <li>
+                    <a className="dropdown-item" href="#" onClick={() => changeLanguage("vi")}>
+                        <i className="flag-vietnam flag" />
+                        Vi {language === "Viet Nam" ? <i className="fa fa-check text-success ms-2" /> : <></>}
+                    </a>
+                </li>
             </ul>
         </div>
+
     )
 }

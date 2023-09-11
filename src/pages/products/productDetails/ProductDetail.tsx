@@ -38,9 +38,6 @@ function ProductDetail() {
         });
 
     }
-
-
-
   }, [id]);
 
   const [selectedImage, setSelectedImage] = useState("");

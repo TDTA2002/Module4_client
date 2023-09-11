@@ -19,4 +19,10 @@ export default {
         }
         return await axios.post(import.meta.env.VITE_SV_HOST + "purchase/order-history", body)
     },
+    findAll: async function (maxItemPage: number, skipItem: number) {
+        return await axios.get(`${import.meta.env.VITE_SV_HOST}/purchase?maxItemPage=${maxItemPage}&skipItem=${skipItem}`);
+    },
+    findById: async function (orderId: string) {
+        return await axios.get(`${import.meta.env.VITE_SV_HOST}/purchase/${orderId}`);
+    },
 }

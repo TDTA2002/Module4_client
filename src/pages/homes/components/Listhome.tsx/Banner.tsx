@@ -104,31 +104,31 @@ export default function Banner() {
             ease: Expo.easeInOut
         });
         gsap.from(".feature_item", {
-            duration: 1, 
-            opacity: 0, 
-            y: 20, 
-            ease: "expo.out", 
-            stagger: 0.2, 
-          });
-      
-          gsap.from(".brand_name", {
             duration: 1,
             opacity: 0,
-            x: -30, 
+            y: 20,
             ease: "expo.out",
-          });
-          gsap.from(".feature", {
+            stagger: 0.2,
+        });
+
+        gsap.from(".brand_name", {
             duration: 1,
             opacity: 0,
-            y: 30,
+            x: -30,
             ease: "expo.out",
-          });
-          gsap.from(".link", {
+        });
+        gsap.from(".feature", {
             duration: 1,
             opacity: 0,
             y: 30,
             ease: "expo.out",
-          });
+        });
+        gsap.from(".link", {
+            duration: 1,
+            opacity: 0,
+            y: 30,
+            ease: "expo.out",
+        });
     }, []);
     return (
         <>

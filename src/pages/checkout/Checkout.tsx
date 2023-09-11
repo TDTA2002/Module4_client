@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './checkout.scss';
 import apis from '@/services/apis';
+import { message } from 'antd';
 
 interface Product {
     id: string;
@@ -34,6 +35,7 @@ interface newGuestReceipt {
 
 export default function Checkout() {
     const [cart, setCart] = useState<CartItemDetail[]>([]);
+    const [loading, setLoading] = useState(false);
 
     async function formatCart() {
         let cartTemp: CartItemDetail[] = [];
@@ -53,6 +55,7 @@ export default function Checkout() {
     }, [localStorage.getItem("carts")]);
 
     function handleOrder(e: any) {
+        setLoading(true);
         e.preventDefault();
         let newGuestReceipt: newGuestReceipt = {
             email: e.target.email.value,
@@ -62,11 +65,24 @@ export default function Checkout() {
             }, 0),
             payMode: e.target.payMode.value
         }
+
         let guestReceiptDetailList = JSON.parse(localStorage.getItem("carts") ?? "[]")
 
         apis.purchaseApi.createGuestReceipt(newGuestReceipt, guestReceiptDetailList)
             .then(res => {
-                console.log("res", res.data)
+                console.log("res", res)
+                if (res.status == 200) {
+                    setLoading(false);
+                    localStorage.removeItem("carts");
+                    message.success(res.data.message);
+                    window.location.href = "/thank"
+                } else {
+                    message.error(res.data.message);
+                }
+            })
+            .catch(err => {
+                console.log("err", err)
+                setLoading(false);
             })
     }
 
@@ -144,13 +160,13 @@ export default function Checkout() {
                                                 <input type="radio" name='payMode' value="ZALO" /> <span>ZALO</span>
                                             </div>
                                         </div>
-                                        <div className="form-group checkbox-container">
-                                            <div>
-                                                <input type="checkbox" id='checkbox' />
-                                                <label htmlFor="checkbox">Save this information for next time</label>
-                                            </div>
-                                            <button className='continue-button' type='submit'>Continue to shipping</button>
+                                        <div>
+                                            <input type="checkbox" id='checkbox' />
+                                            <label htmlFor="checkbox">Save this information for next time</label>
+
                                         </div>
+                                        <button className='continue-button' type='submit'> {loading ? <span className='loading-spinner'></span> : "Continue to shipping"}
+                                        </button>
                                     </form>
                                     <div className='checkout-content'></div>
                                 </div>

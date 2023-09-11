@@ -42,38 +42,38 @@ const Sidebar = () => {
                 </a>
                 <ul className="side-menu top">
                     <li className={activeMenuItem === 0 ? 'active' : ''}>
-                        <a href="#" onClick={() => handleMenuItemClick(0)}>
+                        <Link to={""} onClick={() => handleMenuItemClick(0)}>
                             <i className="bx bxs-dashboard" />
                             <Link to={""} className="text">Dashboard</Link>
-                        </a>
+                        </Link>
                     </li>
                     <li className={activeMenuItem === 1 ? 'active' : ''}>
-                        <a href="#" onClick={() => handleMenuItemClick(1)}>
+                        <Link to={"add_product"} onClick={() => handleMenuItemClick(1)}>
                             <i className="bx bxs-shopping-bag-alt" />
-                            <Link to={"add_product"} className="text">My Store</Link>
-                        </a>
+                            <Link to={"add_product"} className="text">Products</Link>
+                        </Link>
                     </li>
                     <li className={activeMenuItem === 2 ? 'active' : ''}>
-                        <a href="#" onClick={() => handleMenuItemClick(2)}>
+                        <Link to={"add_category"} onClick={() => handleMenuItemClick(2)}>
                             <i className="bx bxs-doughnut-chart" />
-                            <Link to={"add_category"} className="text">Analytics</Link>
-                        </a>
+                            <Link to={"add_category"} className="text">Category</Link>
+                        </Link>
                     </li>
-          
+
                     <li className={activeMenuItem === 3 ? 'active' : ''}>
-                        <a href="#" onClick={() => handleMenuItemClick(3)}>
+                        <Link to={"list_user"} onClick={() => handleMenuItemClick(3)}>
                             <i className="bx bxs-group" />
                             <Link to={"list_user"} className="text">Users</Link>
-                        </a>
+                        </Link>
+                    </li>
+                    <li className={activeMenuItem === 4 ? 'active' : ''}>
+                        <Link to={"order"}   onClick={() => handleMenuItemClick(4)}>
+                        <i className="bx bxs-dashboard" />
+                            <Link to={"order"} className="text">Bill</Link>
+                        </Link>
                     </li>
                 </ul>
                 <ul className="side-menu">
-                    <li>
-                        <a href="#">
-                            <i className="bx bxs-cog" />
-                            <span className="text">Settings</span>
-                        </a>
-                    </li>
                     <li>
                         <a href="#" className="logout">
                             <i className="bx bxs-log-out-circle" />
@@ -87,28 +87,19 @@ const Sidebar = () => {
                 {/* NAVBAR */}
                 <nav>
                     <i className="bx bx-menu" onClick={toggleSidebar} />
-                    <a href="#" className="nav-link">
-                        Categories
-                    </a>
+                   
                     <form action="#">
                         <div className={`form-input${searchFormVisible ? ' show' : ''}`}>
-                            <input type="search" placeholder="Search..." />
-                            <button type="submit" className="search-btn" onClick={toggleSearchForm}>
-                                <i className={`bx ${searchFormVisible ? 'bx-x' : 'bx-search'}`} />
-                            </button>
+                       
                         </div>
                     </form>
-                    <input type="checkbox" id="switch-mode" onChange={handleDarkModeChange} checked={darkMode} hidden/>
-                    <label htmlFor="switch-mode" className="switch-mode"  />
-                    <a href="#" className="notification">
-                        <i className="bx bxs-bell" />
-                        <span className="num">8</span>
-                    </a>
-                 
+                    <input type="checkbox" id="switch-mode" onChange={handleDarkModeChange} checked={darkMode} hidden />
+                    <label htmlFor="switch-mode" className="switch-mode" />
+
                 </nav>
                 {/* NAVBAR */}
                 {/* MAIN */}
-            <Outlet/>
+                <Outlet />
                 {/* MAIN */}
             </section>
         </>

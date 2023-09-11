@@ -35,26 +35,18 @@ const Register = () => {
         await api.userApi.login(data)
             .then(res => {
                 if (res.status != 200) {
-                    Modal.confirm({
-                        content: res.data.message,
-                        okText: "thử lại"
-                    })
+                    message.warning(res.data.message);
                 } else {
-                    Modal.confirm({
-                        content: res.data.message,
-                        okText: "ok",
-                        onOk: () => {
-                            localStorage.setItem("token", res.data.token)
-                            window.location.href = '/'
-                        }
-                    })
+                    message.success(res.data !== undefined ? res.data.message : res.data.message);
+                    localStorage.setItem("token", res.data.token);
+                    setTimeout(() => {
+                        window.location.href = "/"
+                    }, 2000)
                 }
             })
             .catch(_err => {
-                Modal.success({
-                    content: "Sập server!",
-                    okText: "thử lại"
-                })
+                message.error('An error occurred during registration. Please try again.');
+                setLoad(false);
             })
 
         setLoad(false)

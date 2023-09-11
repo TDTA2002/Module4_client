@@ -16,7 +16,7 @@ export default function RouteSetup() {
       <Routes>
         {/* Home - Navbar + Footer */}
         <Route path="/" element={<Home></Home>}>
-          <Route path="about" element={Lazy(() => import("@components/Test"))()}></Route>
+          {/* <Route path="about" element={Lazy(() => import("@components/Test"))()}></Route> */}
           <Route path="infor" element={<>Thông Tin</>}></Route>
           <Route path="" element={Lazy(() => import("@/pages/homes/components/Listhome.tsx/Listhome"))()}></Route>
           {/* Products */}

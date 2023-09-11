@@ -26,7 +26,7 @@ export default function New_product() {
 
     return (
         <>
-        <Banner/>
+            <Banner />
             <div className='multicarousel-container'>
                 <div className="list_new_title">
                     <h2>Our <span style={{ color: "rgb(255 100 82)" }}>Popular</span> Products
@@ -90,38 +90,38 @@ export default function New_product() {
                     swipeable
                 >
                     <div className='product'>
-                        <img style={{ width: "200px" }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuzL-gRXRwYKvbwHdX3s2iEh7J-6KoGFtu6A&usqp=CAU" alt="" />
-                        <p>Product1</p>
+                        <img style={{ width: "200px" }} src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/5615e577-16eb-4e44-8c60-0fc968dd711d/gt-cut-2-mens-basketball-shoes-tmfmFl.png" alt="" />
+                        <p>Nike G.T. Cut 2</p>
                     </div>
                     <div className='product'>
-                        <img style={{ width: "200px" }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuzL-gRXRwYKvbwHdX3s2iEh7J-6KoGFtu6A&usqp=CAU" alt="" />
-                        <p>Product2</p>
+                        <img style={{ width: "200px" }} src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/8ab04295-402a-433c-a181-2973806a7c1f/gt-cut-2-womens-basketball-shoes-B31flV.png" alt="" />
+                        <p>Nike G.T. Cut 1</p>
                     </div>
                     <div className='product'>
-                        <img style={{ width: "200px" }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuzL-gRXRwYKvbwHdX3s2iEh7J-6KoGFtu6A&usqp=CAU" alt="" />
-                        <p>Product3</p>
+                        <img style={{ width: "200px" }} src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/5615d881-6725-422a-b97b-82835fa62411/ja-1-wet-cement-basketball-shoes-bCx2W3.png" alt="" />
+                        <p>Ja 1 "Wet Cement"</p>
                     </div>
                     <div className='product'>
-                        <img style={{ width: "200px" }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuzL-gRXRwYKvbwHdX3s2iEh7J-6KoGFtu6A&usqp=CAU" alt="" />
-                        <p>Product4</p>
+                        <img style={{ width: "200px" }} src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/9e68f2a5-adfe-4098-bb9c-fab78b2bec16/air-jordan-xxxviii-fundamental-basketball-shoes-7qLMW4.png" alt="" />
+                        <p>Air Jordan XXXVIII "Fundamental"</p>
                     </div>
                     <div className='product'>
-                        <img style={{ width: "200px" }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuzL-gRXRwYKvbwHdX3s2iEh7J-6KoGFtu6A&usqp=CAU" alt="" />
-                        <p>Product5</p>
+                        <img style={{ width: "200px" }} src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/ff0baa29-49d2-4594-91a6-b017864186c2/lebron-nxxt-gen-basketball-shoes-55g4w1.png" alt="" />
+                        <p>LeBron 20</p>
                     </div>
                     <div className='product'>
-                        <img style={{ width: "200px" }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuzL-gRXRwYKvbwHdX3s2iEh7J-6KoGFtu6A&usqp=CAU" alt="" />
-                        <p>Product6</p>
+                        <img style={{ width: "200px" }} src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/d77526da-7768-47b6-a268-7d6b6ce9fb02/gt-jump-2-mens-basketball-shoes-7Nc1N1.png" alt="" />
+                        <p>Nike G.T.Jump 2</p>
                     </div>
                     <div className='product'>
-                        <img style={{ width: "200px" }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuzL-gRXRwYKvbwHdX3s2iEh7J-6KoGFtu6A&usqp=CAU" alt="" />
-                        <p>Product7</p>
+                        <img style={{ width: "200px" }} src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/ad357d4a-4616-4320-9317-0447727aba5e/freak-5-basketball-shoes-jZzrx4.png" alt="" />
+                        <p>Freak 5 "Loyalty"</p>
                     </div>
                 </Carousel>
             </div>
             <Services />
-            <Gallery/>
-            
+            <Gallery />
+
         </>
 
     )

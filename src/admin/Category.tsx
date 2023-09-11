@@ -84,6 +84,9 @@ export default function Productlist() {
                 setIsLoading(false); // Kết thúc loading
             });
     }, [])
+
+    console.log("categories", categories);
+
     return (
         <main>
             <div className="head-title">
@@ -98,7 +101,7 @@ export default function Productlist() {
                         </li>
                         <li>
                             <a className="active" href="#">
-                                My Store
+                                Category
                             </a>
                         </li>
                     </ul>
@@ -115,7 +118,7 @@ export default function Productlist() {
             <div className="table-data">
                 <div className="order">
                     <div className="head">
-                        <h3>Recent Orders</h3>
+                        <h3>Categories</h3>
                         <i className="bx bx-search" />
                         <i className="bx bx-filter" />
                     </div>

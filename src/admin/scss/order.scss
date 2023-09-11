@@ -1,0 +1,31 @@
+.page_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    .item_page {
+        cursor: pointer;
+        margin: 0 10px;
+        transition: transform 0.2s ease;
+        opacity: 0.5;
+
+        &:hover {
+            transform: scale(1.2);
+            opacity: 2;
+
+        }
+
+        &.active {
+            border-bottom: 2px solid rgb(60, 0, 255);
+            opacity: 2 !important
+        }
+    }
+
+    .FaAngleLeft,
+    .FaAngleRight {
+        cursor: pointer;
+        margin: 0 10px;
+
+    }
+}
