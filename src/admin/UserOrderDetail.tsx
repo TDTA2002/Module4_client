@@ -34,7 +34,7 @@ export default function OrderDetail() {
     useEffect(() => {
         if (orderId) {
             setIsLoading(true);
-            api.purchaseApi.findById(orderId)
+            api.purchaseApi.findUserById(orderId)
                 .then(res => {
                     if (res.status === 200) {
                         setGuestReceiptDetail(res.data.data.guestReceiptDetail);
@@ -63,39 +63,12 @@ export default function OrderDetail() {
         setProducts(receiptDetailTemp);
     }
 
+    console.log("products", products)
+    console.log("orderId", orderId);
     console.log("guestReceiptDetail", guestReceiptDetail)
 
     return (
-        // <div className='orderDetail-wrapper'>
-        //     <table>
-        //         <thead>
-        //             <tr>
-        //                 <th scope="col">ID</th>
-        //                 <th scope="col">Product</th>
-        //                 <th scope="col">Name</th>
-        //                 <th scope="col">Quantity</th>
-        //                 <th scope="col">Price (per item)</th>
-        //                 <th scope="col">Total Price</th>
-        //             </tr>
-        //         </thead>
-        //         <tbody>
-        //             {isLoading ? <div className="d-flex justify-content-center loading-wrapper">
-        //                 <div className="spinner-border" role="status">
-        //                     <span className="visually-hidden">Loading...</span>
-        //                 </div>
-        //             </div> : products?.map((product, index) => (
-        //                 <tr key={index} className='orderProductDetail'>
-        //                     <td>{index + 1}</td>
-        //                     <td><img src={product.productDetail.avatar} alt="noImage" className={`${productVisible ? 'show' : ''}`} /></td>
-        //                     <td className='orderProductDetail-name'>{product.productDetail.name}</td>
-        //                     <td className='orderProductDetail-name'>{product.quantity}</td>
-        //                     <td>${product.productDetail.price}</td>
-        //                     <td>${product.quantity * product.productDetail.price}</td>
-        //                 </tr>
-        //             ))}
-        //         </tbody>
-        //     </table>
-        // </div>
+
         <main>
             <div className="head-title">
                 <div className="left">

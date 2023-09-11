@@ -33,7 +33,9 @@ export default function Receipt() {
           setIsShowOTP(true);
           setIsShow(false);
         }
-        console.log("đã vào đây", res.data)
+        else (
+          message.error(res.data.message)
+        )
       })
       .catch(err => {
         setLoading(false);
@@ -53,7 +55,7 @@ export default function Receipt() {
       })
   }
   return (
-    <>
+    <div style={{ height: "530px" }}>
       {isShow ? <div className='getOTP-container'>
         <h5>Enter your email to get OTP</h5>
         <input type="text" placeholder='Enter your email' value={emailInput} onChange={(e) => {
@@ -65,43 +67,6 @@ export default function Receipt() {
       </div> : <></>}
       {isShowOTP ? <OTPVerification handleGetReceipt={handleGetReceipt} /> : <></>}
       {isShowReceipts ?
-        // <div className="container mt-5">
-        //   <div className="d-flex justify-content-center row">
-        //     <div className="col-md-10">
-        //       <div className="rounded">
-        //         <div className="table-responsive table-borderless">
-        //           <table className="table">
-        //             <thead>
-        //               <tr>
-        //                 <th>Order #</th>
-        //                 <th>Email</th><th>status</th>
-        //                 <th>Total</th>
-        //                 <th>Created</th>
-        //                 <th />
-        //               </tr>
-        //             </thead>
-        //             <tbody className="table-body">
-        //               {receipts?.map((receipt, index) => (
-        //                 <tr className="cell-1">
-        //                   <td>{(receipt as Receipt).id}</td>
-        //                   <td>Gasper Antunes</td>
-        //                   <td>
-        //                     <span className="badge badge-success">{(receipt as Receipt).state}</span>
-        //                   </td>
-        //                   <td>${(receipt as Receipt).total}</td>
-        //                   <td>{(receipt as Receipt).createAt.toLocaleString()}</td>
-        //                   <td>
-        //                     {/* <ReceiptDetail /> */}
-        //                   </td>
-        //                 </tr>
-        //               ))}
-        //             </tbody>
-        //           </table>
-        //         </div>
-        //       </div>
-        //     </div>
-        //   </div>
-        // </div>
         <div className="d-flex">
           <section className="invoice-list-page">
             <div className="invoice-list-page__header">
@@ -167,7 +132,7 @@ export default function Receipt() {
 
         : <></>
       }
-    </>
+    </div>
 
 
   )

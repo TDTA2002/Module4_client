@@ -63,12 +63,12 @@ const Sidebar = () => {
                     <li className={activeMenuItem === 3 ? 'active' : ''}>
                         <Link to={"list_user"} onClick={() => handleMenuItemClick(3)}>
                             <i className="bx bxs-group" />
-                            <Link to={"list_user"} className="text">Users</Link>
+                            <Link to={"Userbill"} className="text">Users</Link>
                         </Link>
                     </li>
                     <li className={activeMenuItem === 4 ? 'active' : ''}>
-                        <Link to={"order"}   onClick={() => handleMenuItemClick(4)}>
-                        <i className="bx bxs-dashboard" />
+                        <Link to={"order"} onClick={() => handleMenuItemClick(4)}>
+                            <i className="bx bxs-dashboard" />
                             <Link to={"order"} className="text">Bill</Link>
                         </Link>
                     </li>
@@ -87,10 +87,10 @@ const Sidebar = () => {
                 {/* NAVBAR */}
                 <nav>
                     <i className="bx bx-menu" onClick={toggleSidebar} />
-                   
+
                     <form action="#">
                         <div className={`form-input${searchFormVisible ? ' show' : ''}`}>
-                       
+
                         </div>
                     </form>
                     <input type="checkbox" id="switch-mode" onChange={handleDarkModeChange} checked={darkMode} hidden />

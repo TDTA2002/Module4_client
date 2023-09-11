@@ -7,6 +7,13 @@ export default {
             guestReceiptDetailList
         })
     },
+    userGuestReceipt: async function (newUserReceipt: any, userReceiptDetailList: any, userId: string) {
+        return await axios.post(import.meta.env.VITE_SV_HOST + "userpurchase", {
+            newUserReceipt,
+            userReceiptDetailList,
+            userId
+        })
+    },
     findGuestReceipt: async function (data: {
         email: string;
         otp?: string;
@@ -22,7 +29,19 @@ export default {
     findAll: async function (maxItemPage: number, skipItem: number) {
         return await axios.get(`${import.meta.env.VITE_SV_HOST}/purchase?maxItemPage=${maxItemPage}&skipItem=${skipItem}`);
     },
+    findUserAll: async function (maxItemPage: number, skipItem: number) {
+        return await axios.get(`${import.meta.env.VITE_SV_HOST}/userpurchase?maxItemPage=${maxItemPage}&skipItem=${skipItem}`);
+    },
     findById: async function (orderId: string) {
         return await axios.get(`${import.meta.env.VITE_SV_HOST}/purchase/${orderId}`);
+    },
+    findUserById: async function (orderId: string) {
+        return await axios.get(`${import.meta.env.VITE_SV_HOST}/userpurchase/${orderId}`);
+    },
+    update: async function (orderId: string, data: {
+        state: string,
+        type: boolean
+    }) {
+        return await axios.patch(`${import.meta.env.VITE_SV_HOST}/purchase/${orderId}`, data);
     },
 }

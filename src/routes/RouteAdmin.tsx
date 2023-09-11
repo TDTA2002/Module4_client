@@ -7,7 +7,9 @@ export default
         <Route path="add_category" element={Lazy(() => import("@admin/Category"))()}></Route>
         <Route path="list_user" element={Lazy(() => import("@admin/User"))()}></Route>
         <Route path="order" element={Lazy(() => import("@admin/Order"))()}></Route>
+        <Route path="Userbill" element={Lazy(() => import("@admin/UserBill"))()}></Route>
         <Route path="order/:orderId" element={Lazy(() => import("@admin/OrderDetail"))()}></Route>
+        <Route path="Userbill/:orderId" element={Lazy(() => import("@admin/UserOrderDetail"))()}></Route>
 
         <Route path="" element={Lazy(() => import("@admin/Home"))()}></Route>
     </Route>

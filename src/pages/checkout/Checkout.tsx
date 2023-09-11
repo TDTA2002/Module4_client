@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './checkout.scss';
 import apis from '@/services/apis';
 import { message } from 'antd';
+import { useSelector } from 'react-redux';
+import { StoreType } from '@/stores';
 
 interface Product {
     id: string;
@@ -26,9 +28,14 @@ interface CartItemDetail extends CartItem {
     productDetail: Product
 }
 
-interface newGuestReceipt {
+interface NewGuestReceipt {
     email: string;
     phoneNumber: string;
+    total: number;
+    payMode: string;
+}
+
+interface NewUserReceipt {
     total: number;
     payMode: string;
 }
@@ -36,6 +43,8 @@ interface newGuestReceipt {
 export default function Checkout() {
     const [cart, setCart] = useState<CartItemDetail[]>([]);
     const [loading, setLoading] = useState(false);
+    const [isLogin, checkIsLogin] = useState(localStorage.getItem("token"));
+    const userStore = useSelector((store: StoreType) => store.userStore);
 
     async function formatCart() {
         let cartTemp: CartItemDetail[] = [];
@@ -57,7 +66,7 @@ export default function Checkout() {
     function handleOrder(e: any) {
         setLoading(true);
         e.preventDefault();
-        let newGuestReceipt: newGuestReceipt = {
+        let newGuestReceipt: NewGuestReceipt = {
             email: e.target.email.value,
             phoneNumber: e.target.phone.value,
             total: cart.reduce((value, cur) => {
@@ -66,26 +75,53 @@ export default function Checkout() {
             payMode: e.target.payMode.value
         }
 
-        let guestReceiptDetailList = JSON.parse(localStorage.getItem("carts") ?? "[]")
+        let newUserReceipt: NewUserReceipt = {
+            total: cart.reduce((value, cur) => {
+                return value + cur.quantity * cur.productDetail.price
+            }, 0),
+            payMode: e.target.payMode.value
+        }
 
-        apis.purchaseApi.createGuestReceipt(newGuestReceipt, guestReceiptDetailList)
-            .then(res => {
-                console.log("res", res)
-                if (res.status == 200) {
+        if (isLogin) {
+            let userReceiptDetailList = JSON.parse(localStorage.getItem("carts") ?? "[]")
+
+            apis.purchaseApi.userGuestReceipt(newUserReceipt, userReceiptDetailList, userStore.data.id)
+                .then(res => {
+                    console.log("res", res)
+                    if (res.status == 200) {
+                        setLoading(false);
+                        localStorage.removeItem("carts");
+                        message.success(res.data.message);
+                        window.location.href = "/thanks"
+                    } else {
+                        message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    console.log("err", err)
                     setLoading(false);
-                    localStorage.removeItem("carts");
-                    message.success(res.data.message);
-                    window.location.href = "/thank"
-                } else {
-                    message.error(res.data.message);
-                }
-            })
-            .catch(err => {
-                console.log("err", err)
-                setLoading(false);
-            })
-    }
+                })
+        } else {
+            let guestReceiptDetailList = JSON.parse(localStorage.getItem("carts") ?? "[]")
 
+            apis.purchaseApi.createGuestReceipt(newGuestReceipt, guestReceiptDetailList)
+                .then(res => {
+                    console.log("res", res)
+                    if (res.status == 200) {
+                        setLoading(false);
+                        localStorage.removeItem("carts");
+                        message.success(res.data.message);
+                        window.location.href = "/thanks"
+                    } else {
+                        message.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    console.log("err", err)
+                    setLoading(false);
+                })
+        }
+    }
     return (
         <>
             <div>
@@ -134,40 +170,62 @@ export default function Checkout() {
                             <div className="col-md-8 order-md-1">
                                 <div className='main'>
 
-                                    <form action="" onSubmit={(e) => handleOrder(e)}>
-                                        <div className="form-group">
-                                            <input type="text" placeholder='First name' required className='firstName' />
-                                            <input type="text" placeholder='Last name' required className='lastName' />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="text" placeholder='Email' required className='email' name='email' />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="text" placeholder='Address' required className='address' />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="text" placeholder='Apartment, suite, etc. (optional)' required className='apartment' />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <input type="text" placeholder='Phone (optional)' required className='phone' name='phone' />
-                                        </div>
-                                        <div className='payMode'>
-                                            <div className='cash'>
-                                                <input type="radio" name='payMode' value="CASH" /> <span>CASH</span>
+                                    {
+                                        isLogin ? <form action="" onSubmit={(e) => handleOrder(e)}>
+                                            <div className="form-group">
+                                                <input type="text" placeholder='Address' required className='address' />
                                             </div>
-                                            <div className='zalo'>
-                                                <input type="radio" name='payMode' value="ZALO" /> <span>ZALO</span>
+                                            <div className="form-group">
+                                                <input type="text" placeholder='Apartment, suite, etc. (optional)' required className='apartment' />
                                             </div>
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" id='checkbox' />
-                                            <label htmlFor="checkbox">Save this information for next time</label>
 
-                                        </div>
-                                        <button className='continue-button' type='submit'> {loading ? <span className='loading-spinner'></span> : "Continue to shipping"}
-                                        </button>
-                                    </form>
+                                            <div className="form-group">
+                                                <input type="text" placeholder='Phone (optional)' required className='phone' name='phone' />
+                                            </div>
+                                            <div className='payMode'>
+                                                <div className='cash'>
+                                                    <input type="radio" name='payMode' value="CASH" /> <span>CASH</span>
+                                                </div>
+                                                <div className='zalo'>
+                                                    <input type="radio" name='payMode' value="ZALO" /> <span>ZALO</span>
+                                                </div>
+                                            </div>
+
+                                            <button className='continue-button' type='submit'> {loading ? <span className='loading-spinner'></span> : "Continue to shipping"}
+                                            </button>
+                                        </form>
+                                            :
+                                            <form action="" onSubmit={(e) => handleOrder(e)}>
+                                                <div className="form-group">
+                                                    <input type="text" placeholder='First name' required className='firstName' />
+                                                    <input type="text" placeholder='Last name' required className='lastName' />
+                                                </div>
+                                                <div className="form-group">
+                                                    <input type="text" placeholder='Email' required className='email' name='email' />
+                                                </div>
+                                                <div className="form-group">
+                                                    <input type="text" placeholder='Address' required className='address' />
+                                                </div>
+                                                <div className="form-group">
+                                                    <input type="text" placeholder='Apartment, suite, etc. (optional)' required className='apartment' />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <input type="text" placeholder='Phone (optional)' required className='phone' name='phone' />
+                                                </div>
+                                                <div className='payMode'>
+                                                    <div className='cash'>
+                                                        <input type="radio" name='payMode' value="CASH" /> <span>CASH</span>
+                                                    </div>
+                                                    <div className='zalo'>
+                                                        <input type="radio" name='payMode' value="ZALO" /> <span>ZALO</span>
+                                                    </div>
+                                                </div>
+
+                                                <button className='continue-button' type='submit'> {loading ? <span className='loading-spinner'></span> : "Continue to shipping"}
+                                                </button>
+                                            </form>
+                                    }
                                     <div className='checkout-content'></div>
                                 </div>
                                 <hr className="mb-4" />

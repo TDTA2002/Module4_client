@@ -29,3 +29,28 @@
 
     }
 }
+
+// Định nghĩa màu cho các tùy chọn
+.option-pending {
+    background-color: orange;
+}
+
+.option-accepted {
+    background-color: green;
+    color: white; // Nếu bạn muốn thay đổi màu chữ
+}
+
+.option-shipping {
+    background-color: blue;
+    color: white; // Nếu bạn muốn thay đổi màu chữ
+}
+
+.option-done {
+    background-color: gray;
+    color: white; // Nếu bạn muốn thay đổi màu chữ
+}
+
+// Để đảm bảo chữ trắng trên các tùy chọn có nền màu sáng, bạn có thể thêm một class khác để đảm bảo màu chữ phù hợp.
+.light-text {
+    color: white;
+}

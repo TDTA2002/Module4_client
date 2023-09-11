@@ -6,7 +6,7 @@ import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 interface Order {
     id: string,
-    email: string,
+    price: string,
     phoneNumber: string,
     state: string,
     createAt: Date
@@ -23,7 +23,7 @@ export default function Order() {
 
     useEffect(() => {
         setIsLoading(true);
-        api.purchaseApi.findAll(maxItemPage, skipItem)
+        api.purchaseApi.findUserAll(maxItemPage, skipItem)
             .then(res => {
                 if (res.status == 200) {
                     let maxPageArr: any[] = [];
@@ -50,7 +50,7 @@ export default function Order() {
     }, [])
 
     function changePage(pageItemObj: any) {
-        api.purchaseApi.findAll(maxItemPage, pageItemObj.skip)
+        api.purchaseApi.findUserAll(maxItemPage, pageItemObj.skip)
             .then(res => {
                 if (res.status == 200) {
                     console.log("res.data", res.data)
@@ -107,8 +107,7 @@ export default function Order() {
 
                             <tr>
                                 <th>#</th>
-                                <th>Customer</th>
-                                <th>Phone Number</th>
+                          
                                 <th>Actions</th>
                                 <th>Created</th>
                             </tr>
@@ -127,8 +126,6 @@ export default function Order() {
                                 orders?.map((order, index) => (
                                     <tr key={Math.random() * Date.now()} className='order'>
                                         <td>{(order as Order).id}</td>
-                                        <td>{(order as Order).email}</td>
-                                        <td>{(order as Order).phoneNumber}</td>
                                         <td onClick={(e) => {
                                             if (order.state == "DONE") return
                                             let curStateIndex = state.indexOf((order as Order).state);

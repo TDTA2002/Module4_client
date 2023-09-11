@@ -13,5 +13,7 @@ export default
     </Route>
     <Route path="/check-order" element={Lazy(() => import("@pages/checkOrder/CheckOrder"))()}></Route>
     <Route path="/thank" element={Lazy(() => import("@pages/thank/Thank"))()}></Route>
-    <Route path="/bill" element={Lazy(() => import("@pages/bill/Bill"))()}></Route>
+    {/* <Route path="/bill" element={Lazy(() => import("@pages/bill/Bill"))()}></Route>
+    <Route path="/receipt" element={Lazy(() => import("@pages/receipt/Receipt"))()}></Route> */}
+
   </>
