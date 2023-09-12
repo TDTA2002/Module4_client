@@ -37,7 +37,7 @@ export default function OrderDetail() {
             api.purchaseApi.findById(orderId)
                 .then(res => {
                     if (res.status === 200) {
-                        setGuestReceiptDetail(res.data.data.guestReceiptDetail);
+                        setGuestReceiptDetail(res.data.data?.guestReceiptDetail);
                     }
                 })
                 .finally(() => {

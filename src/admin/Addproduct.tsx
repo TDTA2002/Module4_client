@@ -2,6 +2,7 @@ import { FormEvent, MutableRefObject, useEffect, useRef, useState } from 'react'
 import api from '@services/apis'
 import './scss/addproduct.scss'
 import Input from 'antd/es/input/Input';
+import { message } from 'antd';
 
 
 interface Category {
@@ -14,10 +15,12 @@ interface Picture {
     url: string;
 }
 export default function Product() {
-    const imgPreviewRef: MutableRefObject<HTMLImageElement | null> = useRef(null);
+    const imgPreviewRef = useRef();
     const [categories, setCategories] = useState([]);
     const [pictures, setPictures] = useState<Picture[]>([]);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         api.categoryApi.findMany()
             .then(res => {
@@ -44,14 +47,19 @@ export default function Product() {
         }
 
         api.productApi.create(formData)
-            .then(res => {
-                console.log("res", res)
+            .then((res: any) => {
+                // console.log("res", res)
+                setLoading(false);
+                message.success(res.data.message);
+                (document.getElementById("name") as HTMLInputElement).value = "";
+                (document.getElementById("des") as HTMLInputElement).value = "";
+                (document.getElementById("price") as HTMLInputElement).value = "";
+                (imgPreviewRef.current! as HTMLImageElement).src = "";
             })
-            .catch(err => {
-
+            .catch((err: any) => {
+                message.error('An error occurred during registration. Please try again.');
+                setLoading(false);
             })
-
-        window.alert("OK")
     }
     return (
 
@@ -159,7 +167,7 @@ export default function Product() {
                                     Close
                                 </button>
                                 <button type='submit' className="btn btn-primary" data-mdb-dismiss="modal">
-                                    Save changes
+                                    {loading ? <span className='loading-spinner'></span> : "Save"}
                                 </button>
                             </div>
                         </div >

@@ -49,12 +49,11 @@ export default function Productlist() {
                     const categoriesWithCount = res.data.data.map((category: any) => {
                         return {
                             ...category,
-                            count: 0  // Khởi tạo số lượng sản phẩm ban đầu là 0
+                            count: 0 
                         };
                     });
                     setCategories(categoriesWithCount);
 
-                    // Lặp qua danh sách danh mục và tìm số lượng sản phẩm cho mỗi danh mục
                     categoriesWithCount.forEach((category: { id: string; }) => {
                         apis.productApi.findByCategory(category.id)
                             .then((res: { status: number; data: { data: string | any[]; }; }) => {

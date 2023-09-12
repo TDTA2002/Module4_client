@@ -2,7 +2,10 @@ import React, { useEffect } from 'react'
 import Runner from '../../../../public/imgs/Runner.png'
 import { gsap, Expo } from 'gsap';
 import '../Navbars/navbar.scss'
+import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 export default function Banner() {
+    const { t } = useTranslation();
     useEffect(() => {
         gsap.to(".title-1", 2, {
             x: 30,
@@ -147,10 +150,10 @@ export default function Banner() {
 
             <div className="content">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum itaque sequi similique, eius maxime porro tenetur magnam in officiis velit quisquam aspernatur voluptatum ab excepturi commodi suscipit id non quod dolores ad consequatur corporis nisi. Aperiam neque recusandae libero.
+                    {t("shopNow")}
                 </p>
 
-                <button>Shop Now</button>
+                <button ><Link to="products">  {t("Mua")}</Link></button>
             </div>
 
             <div className="media">

@@ -211,7 +211,6 @@ export default function Productlist() {
                                         </td>
 
                                         <td>
-                                            <button type="button" className="status delete" >DELETE</button>
                                             <Update product={product} />
                                         </td>
                                     </tr>

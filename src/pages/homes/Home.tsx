@@ -59,14 +59,14 @@ export default function Home() {
             </div>
           </div>
           <div className="feature">
-            <span className="feature_item"><ToggleLanguage/></span>
-            <span className="feature_item">  {isAdmin ? <span onClick={() => navigate("/admin")}>Admin</span> : <span onClick={() => navigate("/profile")}>Hello {store.userStore.data?.userName}</span>}</span>
+            <span className="feature_item"><ToggleLanguage /></span>
+            <span className="feature_item">  {isAdmin ? <span onClick={() => navigate("/admin")}>Admin</span> : <span onClick={() => navigate("/check-order")}>Receipt</span>}</span>
 
 
             <>
               {store.userStore?.data?.userName ? (
                 <span className="feature_item" onClick={() => handleLogout()}>
-                  Logout
+                  Hello {store.userStore.data?.userName}
                 </span>
               ) : (
                 <Link to="form" className="feature_item">

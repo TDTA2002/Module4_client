@@ -5,7 +5,7 @@ export default function Thank() {
     return (
         <div className="vh-100 d-flex justify-content-center align-items-center">
             <div className="card col-md-4 bg-white shadow-md p-5">
-                <div className="mb-4 text-center" style={{ display: "flex", justifyContent:"center" }}>
+                <div className="mb-4 text-center" style={{ display: "flex", justifyContent: "center" }}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="text-success"
@@ -25,6 +25,8 @@ export default function Thank() {
                         We've send the link to your inbox. Lorem ipsum dolor sit,lorem lorem{" "}
                     </p>
                     <Link to='/' className="btn btn-outline-success">Back Home</Link>
+                    <Link to='/check-order' className="btn btn-outline-success">Check Your Bill</Link>
+
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ import { message } from 'antd';
 import { useSelector } from 'react-redux';
 import { StoreType } from '@/stores';
 
+
 interface Product {
     id: string;
     name: string;
@@ -28,14 +29,14 @@ interface CartItemDetail extends CartItem {
     productDetail: Product
 }
 
-interface NewGuestReceipt {
+interface newGuestReceipt {
     email: string;
     phoneNumber: string;
     total: number;
     payMode: string;
 }
 
-interface NewUserReceipt {
+interface newUserReceipt {
     total: number;
     payMode: string;
 }
@@ -45,6 +46,7 @@ export default function Checkout() {
     const [loading, setLoading] = useState(false);
     const [isLogin, checkIsLogin] = useState(localStorage.getItem("token"));
     const userStore = useSelector((store: StoreType) => store.userStore);
+    // console.log("userStore", userStore.data.id)
 
     async function formatCart() {
         let cartTemp: CartItemDetail[] = [];
@@ -66,7 +68,7 @@ export default function Checkout() {
     function handleOrder(e: any) {
         setLoading(true);
         e.preventDefault();
-        let newGuestReceipt: NewGuestReceipt = {
+        let newGuestReceipt: newGuestReceipt = {
             email: e.target.email.value,
             phoneNumber: e.target.phone.value,
             total: cart.reduce((value, cur) => {
@@ -75,7 +77,7 @@ export default function Checkout() {
             payMode: e.target.payMode.value
         }
 
-        let newUserReceipt: NewUserReceipt = {
+        let newUserReceipt: newUserReceipt = {
             total: cart.reduce((value, cur) => {
                 return value + cur.quantity * cur.productDetail.price
             }, 0),
@@ -92,7 +94,7 @@ export default function Checkout() {
                         setLoading(false);
                         localStorage.removeItem("carts");
                         message.success(res.data.message);
-                        window.location.href = "/thanks"
+                        window.location.href = "/thank"
                     } else {
                         message.error(res.data.message);
                     }
@@ -111,7 +113,7 @@ export default function Checkout() {
                         setLoading(false);
                         localStorage.removeItem("carts");
                         message.success(res.data.message);
-                        window.location.href = "/thanks"
+                        window.location.href = "/thank"
                     } else {
                         message.error(res.data.message);
                     }
@@ -122,6 +124,7 @@ export default function Checkout() {
                 })
         }
     }
+
     return (
         <>
             <div>
@@ -173,6 +176,9 @@ export default function Checkout() {
                                     {
                                         isLogin ? <form action="" onSubmit={(e) => handleOrder(e)}>
                                             <div className="form-group">
+                                                <input type="text" placeholder='Email' required className='email' name='email' />
+                                            </div>
+                                            <div className="form-group">
                                                 <input type="text" placeholder='Address' required className='address' />
                                             </div>
                                             <div className="form-group">
@@ -216,9 +222,6 @@ export default function Checkout() {
                                                 <div className='payMode'>
                                                     <div className='cash'>
                                                         <input type="radio" name='payMode' value="CASH" /> <span>CASH</span>
-                                                    </div>
-                                                    <div className='zalo'>
-                                                        <input type="radio" name='payMode' value="ZALO" /> <span>ZALO</span>
                                                     </div>
                                                 </div>
 

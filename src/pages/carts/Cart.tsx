@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import { Link } from 'react-router-dom';
 import apis from '@/services/apis';
 
@@ -55,9 +55,7 @@ export default function Cart() {
         let updatedCart = cartLocal.filter((item: { productId: string; }) => item.productId !== productId);
         localStorage.setItem("carts", JSON.stringify(updatedCart));
         formatCart();
-        Modal.success({
-            content: "Xóa sản phẩm thành công",
-        });
+        message.success("xóa thành công")
     }
 
     function handleDecrease(idProduct: any) {

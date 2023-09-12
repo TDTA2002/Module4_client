@@ -4,8 +4,9 @@ import './scss/multiCarousel.scss';
 import Services from "./Services";
 import Gallery from "./Gallery";
 import Banner from "./Banner";
-
+import { useTranslation } from "react-i18next";
 export default function New_product() {
+    const { t } = useTranslation();
     // const responsive = {
     //     desktop: {
     //         breakpoint: { max: 3000, min: 1024 },
@@ -29,9 +30,9 @@ export default function New_product() {
             <Banner />
             <div className='multicarousel-container'>
                 <div className="list_new_title">
-                    <h2>Our <span style={{ color: "rgb(255 100 82)" }}>Popular</span> Products
+                    <h2>{t("Our")} <span style={{ color: "rgb(255 100 82)" }}>{t("Popular")}</span> {t("Products")}
                     </h2>
-                    Experience top-notch quality and style with our sought-after selections. Discover a world of comfort, design, and value
+                    {t("design")}
                 </div>
 
                 <Carousel
